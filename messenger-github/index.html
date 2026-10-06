@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0f0d" />
+  <title>ЛИНИЯ — Messenger</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="midnight">
+  <div id="toast" class="toast"></div>
+  <div id="authView" class="auth-view">
+    <div class="auth-card">
+      <div class="brand"><span class="brand-mark">▣</span><span>линия<span class="dot">.</span></span></div>
+      <p class="muted">Современный веб-мессенджер</p>
+      <div class="auth-tabs"><button class="tab active" data-auth="login">Войти</button><button class="tab" data-auth="signup">Регистрация</button></div>
+      <form id="authForm">
+        <label id="usernameWrap" class="hidden">Имя пользователя<input id="username" maxlength="24" placeholder="Например, brat_1" autocomplete="username"></label>
+        <label>Email<input id="email" type="email" required placeholder="you@example.com" autocomplete="email"></label>
+        <label>Пароль<input id="password" type="password" minlength="6" required placeholder="••••••••" autocomplete="current-password"></label>
+        <button class="primary" type="submit" id="authSubmit">Войти</button>
+      </form>
+      <div id="configHint" class="config-hint hidden">Сначала открой <b>config.js</b> и укажи данные Supabase.</div>
+    </div>
+  </div>
+
+  <div id="appView" class="app hidden">
+    <aside class="sidebar">
+      <header class="topbar">
+        <div class="brand small"><span class="brand-mark">▣</span><span>линия<span class="dot">.</span></span></div>
+        <div style="display:flex;gap:6px"><button id="adminBtn" class="icon-btn hidden" title="Админ-панель">♛</button></div>
+      </header>
+      <div class="me-card" id="meCard"></div>
+      <div class="search-wrap"><span>⌕</span><input id="searchInput" placeholder="Найти человека" autocomplete="off"><kbd>/</kbd></div>
+      <div class="section-title"><span>Сообщения</span><span id="unreadCount" class="badge hidden">0</span></div>
+      <div id="chatList" class="chat-list"></div>
+      <div class="sidebar-bottom"><button id="settingsBtn" class="settings-nav" title="Настройки"><span class="settings-icon">⚙</span><span>Настройки</span></button><button id="logoutBtn" class="text-btn">Выйти</button></div>
+    </aside>
+
+    <main class="chat-panel">
+      <div id="emptyState" class="empty-state"><div class="empty-logo">✦</div><h2>Добро пожаловать в линию.</h2><p>Найди пользователя и начни разговор.</p></div>
+      <section id="chatView" class="chat-view hidden">
+        <header class="chat-header"><button id="backBtn" class="icon-btn mobile-only">‹</button><div id="chatUserAvatar" class="avatar"></div><div class="chat-user-meta"><strong id="chatUserName"></strong><span id="chatUserStatus">в сети</span></div><button id="chatMoreBtn" class="icon-btn">⋯</button></header>
+        <div id="messages" class="messages"></div>
+        <form id="messageForm" class="composer"><button type="button" class="icon-btn" id="emojiBtn" title="Эмодзи">☺</button><input id="messageInput" maxlength="4000" placeholder="Сообщение..." autocomplete="off"><button type="button" class="voice-btn" id="voiceBtn" title="Записать голосовое">🎙</button><button class="send-btn" type="submit">➤</button></form>
+      </section>
+    </main>
+
+    <aside id="settingsPanel" class="settings-panel hidden">
+      <div class="settings-head"><h2>Настройки</h2><button id="closeSettings" class="icon-btn">×</button></div>
+      <div class="settings-section"><h3>Оформление</h3><div id="themeGrid" class="theme-grid"></div></div>
+      <div class="settings-section"><h3>Профиль</h3><label>Отображаемое имя<input id="displayNameInput" maxlength="40"></label><label>Username<input id="profileUsernameInput" maxlength="24"></label><button id="saveProfileBtn" class="primary">Сохранить</button></div>
+      <div class="settings-section"><h3>Аккаунт</h3><p id="accountEmail" class="muted"></p></div>
+    </aside>
+
+    <aside id="adminPanel" class="settings-panel hidden admin-panel">
+      <div class="settings-head"><div><h2>Админ-панель</h2><p class="muted">Полный контроль проекта</p></div><button id="closeAdmin" class="icon-btn">×</button></div>
+      <div class="admin-stats" id="adminStats"></div>
+      <div class="settings-section"><h3>Пользователи</h3><input id="adminUserSearch" placeholder="Поиск по username / имени / email"><div id="adminUsers" class="admin-list"></div></div>
+      <div class="settings-section"><h3>Безопасность владельца</h3><p class="muted small-text">Владелец определяется отдельной записью app_owner по UUID. Обычный пользователь не может назначить себя админом, изменить владельца или выдать себе права.</p></div>
+    </aside>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
